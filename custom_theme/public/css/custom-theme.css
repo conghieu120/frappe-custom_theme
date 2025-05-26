@@ -1,0 +1,84 @@
+html[data-theme="light"] {
+  .body {
+    width: 100vw;
+    overflow: hidden;
+  }
+  .main-section {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .page-head {
+    border-bottom: 1px solid #ddd;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  }
+  .navbar {
+    background-color: #007bff !important;
+  }
+
+  .container.page-body {
+    width: 100%;
+  }
+
+  .desk-sidebar-item {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  .desk-sidebar-item.selected {
+    background-color: #bae0ff;
+  }
+  .desk-sidebar-item:hover {
+    transform: scale(1.1);
+  }
+
+  .btn-primary {
+    background-color: #0958d9 !important;
+  }
+  .btn-primary:hover {
+    background-color: #4096ff !important;
+  }
+
+  .dropdown-menu {
+    overflow-x: hidden;
+  }
+  .dropdown-item {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  .dropdown-item:hover {
+    transform: scale(1.06);
+  }
+
+  .layout-side-section {
+    transition: width 0.2s ease;
+  }
+  .layout-main-section-wrapper {
+    transition: width 0.2s ease;
+  }
+
+  ul[role="listbox"] li {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  ul[role="listbox"] li:hover {
+    transform: scale(1.04);
+  }
+
+  .layout-side-section {
+    width: 220px;
+    padding-left: 2rem;
+    border-right: 1px solid #ddd;
+    transition: width 0.3s ease;
+  }
+  .layout-main-section-wrapper {
+    flex: 1;
+    margin-right: 2rem;
+    margin-left: 2rem;
+    transition: margin-left 0.3s ease;
+  }
+  .layout-main-section {
+    border: none !important;
+  }
+
+  .desk-sidebar-item {
+    padding: 6px 4px;
+  }
+
+}
