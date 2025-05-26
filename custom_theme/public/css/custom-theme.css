@@ -16,7 +16,7 @@ html[data-theme="light"] {
     background-color: #007bff !important;
   }
 
-  .container.page-body {
+  .page-body {
     width: 100%;
   }
 
