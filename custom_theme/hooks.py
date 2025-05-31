@@ -24,17 +24,18 @@ app_license = "mit"
 # Includes in <head>
 # ------------------
 
-app_include_css = [
-    "/assets/custom_theme/css/custom-theme.css",
-]
+# app_include_css = [
+#     "/assets/custom_theme/css/accordion.css",
+#     "/assets/custom_theme/css/custom-theme.css",
+# ]
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/custom_theme/css/custom_theme.css"
-app_include_js = [
-    "/assets/custom_theme/js/custom_theme.js",
-    "/assets/custom_theme/js/update_dom.js",
-    "/assets/custom_theme/js/build_menu.js",
-]
+# app_include_js = [
+#     "/assets/custom_theme/js/custom_theme.js",
+#     "/assets/custom_theme/js/update_dom.js",
+#     "/assets/custom_theme/js/build_menu.js",
+# ]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/custom_theme/css/custom_theme.css"

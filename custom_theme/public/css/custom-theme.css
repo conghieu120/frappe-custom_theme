@@ -23,7 +23,7 @@ header.navbar.navbar-expand {
     height: 100%;
     width: 100%;
     align-items: center;
-    background-color: var(--custom-theme-500);
+    background-color: var(--custom-theme-300);
 }
 .nav-menu-icon {
     font-size: 1.8rem;
@@ -46,7 +46,6 @@ header.navbar.navbar-expand {
 
 #custom-module-menu {
     width: 240px;
-    height: 100%;
     height: calc(100vh - 60px);
 }
 
@@ -160,4 +159,31 @@ input[type="text"] {
 }
 .search-bar ul[role="listbox"] li:hover {
     background-color: var(--custom-theme-50);
+}
+
+h4.menu-title {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.menu-content #workspaceTab {
+    padding: 0 12px;
+}
+
+#workspaceTabContent {
+    padding: 0 12px;
+}
+
+.custom-btn.custom-btn-outline-primary {
+    padding: 10px 16px;
+    width: 100%;
+    background: none;
+    text-align: left;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.custom-btn.custom-btn-outline-primary:hover {
+    border-color: var(--custom-theme-500);
+    color: var(--custom-theme-500);
 }
