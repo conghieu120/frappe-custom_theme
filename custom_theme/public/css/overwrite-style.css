@@ -1,0 +1,11 @@
+/* Ẩn menu ở màn chính  */
+#page-Workspaces .layout-side-section {
+    display: none !important;
+}
+
+/* Page content rộng hết, k cần canttainer */
+
+.page-container .page-body {
+    margin: 0;
+    width: 100% !important;
+}

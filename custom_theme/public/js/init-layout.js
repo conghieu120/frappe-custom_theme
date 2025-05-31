@@ -1,45 +1,57 @@
-$(async function () {
+$(async function() {
+    // Add menu layout
+    $("#body").css("margin-left", "340px");
+    const layout = $(`
+        <div id="custom-sidebar">
+            <div id="main-menu"></div>
+            <div id="page-menu">
+                <h4 id="menu-title"></h4>
+                <div id="menu-content"></div>
+            </div>
+        </div>
+    `);
+    $("body").append(layout);
+
+    // Sub menu info
     const route = frappe.get_route();
     let currentModule = route[1];
-    const moduleMenuData = await getModuleContent(currentModule)
-    console.log("Current route:", currentModule);
-    console.log("moduleMenuData:", moduleMenuData);
+    const moduleMenuData = await getModuleContent(currentModule);
     updateCustomMenu(currentModule, moduleMenuData)
     frappe.router.on("change", async () => {
         const route = frappe.get_route();
         currentModule = route[1];
         const moduleMenuData = await getModuleContent(currentModule)
-        console.log("Chuyển đến:", currentModule);
-        console.log("moduleMenuData:", moduleMenuData);
         updateCustomMenu(currentModule, moduleMenuData)
     });
-})
 
-function getModuleContent(module) {
-    return new Promise(res => {
-        frappe.call({
-            method: "frappe.desk.desktop.get_desktop_page",
-            args: {
-                page: {
-                    name: module
-                }
-            },
-            callback: function(r) {
-                res(r.message)
-            }
-        });
-    });
-}
+    // MainMenu
+    const mainMenuData = await getMainMenuContent();
+    console.log(mainMenuData);
+    for (const item of mainMenuData.pages) {
+        $("#custom-sidebar #main-menu").append(`
+            <div role="button" class="main-menu-item" data-link-to="${item.name.toLowerCase().replaceAll(' ', '-')}">
+                <svg class="icon  icon-md" aria-hidden="true">
+                    <use class="" href="#icon-${item.icon}"></use>
+                </svg>
+                <span>${item.label}</span>
+            </div>
+        `);
+    };
+    $("#main-menu .main-menu-item").on('click', function() {
+        const targetLink = $(this).attr("data-link-to");
+        frappe.router.set_route(`/app/${targetLink}`);
+    })
+});
 
 function updateCustomMenu(moduleName='', moduleData) {
-    $('#custom-module-menu .menu-title').text(moduleName);
+    $('#custom-sidebar #menu-title').text(moduleName);
     if (moduleData.cards?.items && moduleData.shortcuts?.items) {
         renderWorkspaceUI(moduleData);
     }
 }
 
 function renderWorkspaceUI(data) {
-    const $container = $('#custom-module-menu .menu-content');
+    const $container = $('#custom-sidebar #menu-content');
     $container.empty();
 
     // Tabs HTML
@@ -60,9 +72,9 @@ function renderWorkspaceUI(data) {
 
     $container.append(tabsHTML);
 
-    $('#custom-module-menu #workspaceTab .nav-link').on('click', function() {
-        $('#custom-module-menu #workspaceTab .nav-link.active').removeClass('active');
-        $('#custom-module-menu #workspaceTabContent .tab-pane').removeClass('show active');
+    $('#custom-sidebar #page-menu .nav-link').on('click', function() {
+        $('#custom-sidebar #page-menu #workspaceTab .nav-link.active').removeClass('active');
+        $('#custom-sidebar #page-menu #workspaceTabContent .tab-pane').removeClass('show active');
         $(this).addClass('active');
         const contentId = $(this).attr('data-bs-target');
         $(contentId).addClass('show active');
@@ -84,7 +96,7 @@ function renderWorkspaceUI(data) {
                 const linkLabel = link.label || link.link_to || link.name;
                 $cardLinks.append(`
                     <div class="mb-2">
-                        <a href="/app/${link.link_to.toLowerCase().replaceAll(' ','-')}" class="fw-semibold text-decoration-none">- ${linkLabel}</a>
+                        <a href="/app/${link.link_to?.toLowerCase().replaceAll(' ','-')}" class="fw-semibold text-decoration-none">- ${linkLabel}</a>
                     </div>
                 `);
             });
@@ -115,7 +127,7 @@ function renderWorkspaceUI(data) {
         const type = item.type || '';
         $shortcutsPane.append(`
             <div class="mb-2">
-                <button data-link-to="${item.link_to.toLowerCase().replaceAll(' ','-')}" class="custom-btn custom-btn-outline-primary">${label}</button>
+                <button data-link-to="${item.link_to?.toLowerCase().replaceAll(' ','-')}" class="custom-btn custom-btn-outline-primary">${label}</button>
             </div>
         `);
     });
@@ -146,4 +158,31 @@ function renderWorkspaceUI(data) {
         }
     })
 
+}
+
+function getModuleContent(module) {
+    return new Promise(res => {
+        frappe.call({
+            method: "frappe.desk.desktop.get_desktop_page",
+            args: {
+                page: {
+                    name: module
+                }
+            },
+            callback: function(r) {
+                res(r.message)
+            }
+        });
+    });
+}
+
+function getMainMenuContent() {
+    return new Promise(res => {
+        frappe.call({
+            method: "frappe.desk.desktop.get_workspace_sidebar_items",
+            callback: function(r) {
+                res(r.message)
+            }
+        });
+    });
 }

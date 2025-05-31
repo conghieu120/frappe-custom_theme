@@ -1,0 +1,25 @@
+header.navbar.navbar-expand {
+    border-bottom: 1px solid var(--custom-theme-400);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: var(--custom-theme-300);
+}
+
+.navbar {
+    height: 60px;
+}
+
+.custom-navbar {
+    display: flex;
+    padding: 0 16px;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+.nav-menu-icon {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    color: #000;
+    width: 94px;
+    padding-left: 20px;
+}
