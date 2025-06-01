@@ -17,8 +17,12 @@
     color: #fff;
 }
 
-#custom-sidebar #main-menu .main-menu-item:hover {
+#custom-sidebar #main-menu .main-menu-item.active {
     background-color: var(--custom-theme-400);
+}
+
+#custom-sidebar #main-menu .main-menu-item:hover {
+    background-color: var(--custom-theme-500);
 }
 
 #custom-sidebar #main-menu .main-menu-item {

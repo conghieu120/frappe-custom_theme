@@ -14,15 +14,17 @@ $(async function() {
 
     // Sub menu info
     const route = frappe.get_route();
-    let currentModule = route[1];
-    const moduleMenuData = await getModuleContent(currentModule);
-    updateCustomMenu(currentModule, moduleMenuData)
-    frappe.router.on("change", async () => {
-        const route = frappe.get_route();
-        currentModule = route[1];
-        const moduleMenuData = await getModuleContent(currentModule)
+    let currentModule = route?.[1];
+    if (currentModule) {
+        const moduleMenuData = await getModuleContent(currentModule);
         updateCustomMenu(currentModule, moduleMenuData)
-    });
+        frappe.router.on("change", async () => {
+            const route = frappe.get_route();
+            currentModule = route[1];
+            const moduleMenuData = await getModuleContent(currentModule)
+            updateCustomMenu(currentModule, moduleMenuData)
+        });
+    }
 
     // MainMenu
     const mainMenuData = await getMainMenuContent();
@@ -38,6 +40,8 @@ $(async function() {
         `);
     };
     $("#main-menu .main-menu-item").on('click', function() {
+        $("#main-menu .main-menu-item.active").removeClass("active");
+        $(this).addClass("active");
         const targetLink = $(this).attr("data-link-to");
         frappe.router.set_route(`/app/${targetLink}`);
     })
