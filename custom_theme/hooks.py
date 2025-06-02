@@ -36,8 +36,6 @@ app_include_css = [
 app_include_js = [
     "/assets/custom_theme/js/init-layout.js",
     "/assets/custom_theme/js/custom_theme.js",
-    # "/assets/custom_theme/js/update_dom.js",
-    # "/assets/custom_theme/js/build_menu.js",
 ]
 
 # include js, css files in header of web template
