@@ -3,7 +3,7 @@
 header.navbar.navbar-expand {
     border-bottom: 1px solid var(--custom-theme-400);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: var(--custom-theme-300);
+    background-color: rgba(var(--custom-theme-rgb-600), 0.3);
 }
 
 .navbar {
@@ -43,6 +43,8 @@ header.navbar.navbar-expand {
     top: 60px;
     position: absolute;
     margin-left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #header-menu .menu-content {
