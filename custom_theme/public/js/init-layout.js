@@ -1,80 +1,9 @@
 $(async function() {
-    // Add menu layout
-    $("#body").css("margin-left", "340px");
-    const layout = $(`
-        <div id="custom-sidebar">
-            <div id="main-menu"></div>
-            <div id="page-menu">
-                <h4 id="menu-title"></h4>
-                <div id="menu-content"></div>
-            </div>
-        </div>
-    `);
-    $("body").append(layout);
+    addMenuToLayout();
+    addMenuToHeader();
 
-    // Menu on header
-    $("header.navbar .container").removeClass("container").addClass("custom-navbar");
-    $("header.navbar").prepend(`
-        <div id="header-menu">
-            <input id="is-show-header-menu" type="checkbox" />
-            <div class="menu-icon">
-                <label for="is-show-header-menu">
-                    <i class="fa-solid fa-bars open-menu-button"></i>
-                    <i class="fa-solid fa-xmark close-menu-button"></i>
-                </label>
-            </div>
-            <div class="menu-content-wrapper">
-                <div class="row menu-content">
-            </div>
-            </div>
-        </div>
-    `);
-
-    // MainMenu
-    const mainMenuData = await getMainMenuContent();
-    for (const item of mainMenuData.pages) {
-        $("#custom-sidebar #main-menu").append(`
-            <div role="button" class="main-menu-item" data-link-to="${item.name.toLowerCase().replaceAll(' ', '-')}">
-                <svg class="icon  icon-md" aria-hidden="true">
-                    <use class="" href="#icon-${item.icon}"></use>
-                </svg>
-                <span>${item.label}</span>
-            </div>
-        `);
-        $('#header-menu .menu-content').append(`
-            <div class="col-6 menu-content-item" role="button" data-link-to="${item.name.toLowerCase().replaceAll(' ', '-')}">
-                <svg class="icon  icon-md" aria-hidden="true">
-                    <use class="" href="#icon-${item.icon}"></use>
-                </svg>
-                <span>${item.label}</span>
-            </div>
-        `)
-    };
-    $("#main-menu .main-menu-item").on('click', function() {
-        $("#main-menu .main-menu-item.active").removeClass("active");
-        $(this).addClass("active");
-        const targetLink = $(this).attr("data-link-to");
-        frappe.router.set_route(`/app/${targetLink}`);
-    })
-    $("#header-menu .menu-content-item").on('click', function() {
-        const targetLink = $(this).attr("data-link-to");
-        frappe.router.set_route(`/app/${targetLink}`);
-        $("#is-show-header-menu").prop('checked', false);
-    })
-
-    // Sub menu info
-    const route = frappe.get_route();
-    let currentModule = route?.[1];
-    if (currentModule) {
-        const moduleMenuData = await getModuleContent(currentModule);
-        updateCustomMenu(currentModule, moduleMenuData)
-        frappe.router.on("change", async () => {
-            const route = frappe.get_route();
-            currentModule = route[1];
-            const moduleMenuData = await getModuleContent(currentModule)
-            updateCustomMenu(currentModule, moduleMenuData)
-        });
-    }
+    await initMenuItem();
+    await setupModuleMenu();
 });
 
 function updateCustomMenu(moduleName='', moduleData) {
@@ -217,5 +146,86 @@ function getMainMenuContent() {
                 res(r.message)
             }
         });
+    });
+}
+
+function addMenuToLayout() {
+    $("#body").css("margin-left", "340px");
+    const layout = $(`
+        <div id="custom-sidebar">
+            <div id="main-menu"></div>
+            <div id="page-menu">
+                <h4 id="menu-title"></h4>
+                <div id="menu-content"></div>
+            </div>
+        </div>
+    `);
+    $("body").append(layout);
+}
+
+function addMenuToHeader() {
+    $("header.navbar .container").removeClass("container").addClass("custom-navbar");
+    $("header.navbar").prepend(`
+        <div id="header-menu">
+            <input id="is-show-header-menu" type="checkbox" />
+            <div class="menu-icon">
+                <label for="is-show-header-menu">
+                    <i class="fa-solid fa-bars open-menu-button"></i>
+                    <i class="fa-solid fa-xmark close-menu-button"></i>
+                </label>
+            </div>
+            <div class="menu-content-wrapper">
+                <div class="row menu-content">
+            </div>
+            </div>
+        </div>
+    `);
+}
+
+async function initMenuItem() {
+    const mainMenuData = await getMainMenuContent();
+    for (const item of mainMenuData.pages) {
+        $("#custom-sidebar #main-menu").append(`
+            <div role="button" class="main-menu-item" data-link-to="${item.name.toLowerCase().replaceAll(' ', '-')}">
+                <svg class="icon  icon-md" aria-hidden="true">
+                    <use class="" href="#icon-${item.icon}"></use>
+                </svg>
+                <span>${item.label}</span>
+            </div>
+        `);
+        $('#header-menu .menu-content').append(`
+            <div class="col-6 menu-content-item" role="button" data-link-to="${item.name.toLowerCase().replaceAll(' ', '-')}">
+                <svg class="icon  icon-md" aria-hidden="true">
+                    <use class="" href="#icon-${item.icon}"></use>
+                </svg>
+                <span>${item.label}</span>
+            </div>
+        `)
+    };
+    $("#main-menu .main-menu-item").on('click', function() {
+        $("#main-menu .main-menu-item.active").removeClass("active");
+        $(this).addClass("active");
+        const targetLink = $(this).attr("data-link-to");
+        frappe.router.set_route(`/app/${targetLink}`);
+    })
+    $("#header-menu .menu-content-item").on('click', function() {
+        const targetLink = $(this).attr("data-link-to");
+        frappe.router.set_route(`/app/${targetLink}`);
+        $("#is-show-header-menu").prop('checked', false);
+    })
+}
+
+async function setupModuleMenu() {
+    const route = frappe.get_route();
+    let currentModule = route?.[1];
+    if (currentModule) {
+        const moduleMenuData = await getModuleContent(currentModule);
+        updateCustomMenu(currentModule, moduleMenuData)
+    }
+    frappe.router.on("change", async () => {
+        const route = frappe.get_route();
+        currentModule = route[1];
+        const moduleMenuData = await getModuleContent(currentModule)
+        updateCustomMenu(currentModule, moduleMenuData)
     });
 }
