@@ -8,3 +8,47 @@
     margin: 0;
     width: 100% !important;
 }
+
+/* Thẻ trong các màn */
+.widget.links-widget-box {
+    padding: 0;
+    background-color: var(--custom-theme-50);
+    border: 1px solid var(--custom-theme-200);
+    overflow: hidden;
+}
+
+.widget.links-widget-box .widget-head {
+    background-color: var(--custom-theme-200);
+    padding: 12px 16px;
+    color: var(--custom-theme-600) !important;
+}
+
+.widget.links-widget-box .widget-label .ellipsis {
+    color: var(--custom-theme-700) !important;
+}
+
+.widget.links-widget-box .widget-body {
+    padding: 4px 12px;
+}
+
+.widget.links-widget-box .widget-body .link-item {
+    background-color: var(--custom-theme-200);
+    padding: 8px 12px;
+}
+
+.widget.links-widget-box .widget-body .link-item:not(:first-child) {
+    margin-top: 10px;
+}
+
+.widget.links-widget-box .widget-body .link-item .link-content {
+    transition: transform 0.3s ease-out, color 0.3s ease-out;
+}
+
+.widget.links-widget-box .widget-body .link-item:hover .link-content {
+    color: var(--custom-theme-600);
+    transform: translateX(8px);
+}
+
+.widget.links-widget-box .widget-footer {
+    padding: 12px;
+}
