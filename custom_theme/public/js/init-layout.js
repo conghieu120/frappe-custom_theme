@@ -1,9 +1,9 @@
 $(async function() {
     addMenuToLayout();
     addMenuToHeader();
-
     await initMenuItem();
     await setupModuleMenu();
+    setupClickShowHideSubMenu();
 });
 
 function updateCustomMenu(moduleName='', moduleData) {
@@ -225,7 +225,26 @@ async function setupModuleMenu() {
     frappe.router.on("change", async () => {
         const route = frappe.get_route();
         currentModule = route[1];
-        const moduleMenuData = await getModuleContent(currentModule)
-        updateCustomMenu(currentModule, moduleMenuData)
+        const moduleMenuData = await getModuleContent(currentModule);
+        updateCustomMenu(currentModule, moduleMenuData);
+        setupClickShowHideSubMenu()
+    });
+}
+
+function setupClickShowHideSubMenu() {
+    $('.btn-reset.sidebar-toggle-btn').off('click');
+    $('.btn-reset.sidebar-toggle-btn').on('click', function() {
+        if ($("#page-menu").is(":visible")) {
+            $("#page-menu").hide();
+            $("#body").animate({
+                marginLeft: "80px"
+            }, 200, "linear")
+        } else {
+            $("#body").animate({
+                marginLeft: "340px"
+            }, 200, "linear", function() {
+                $("#page-menu").show();
+            })
+        }
     });
 }
