@@ -29,6 +29,7 @@ app_include_css = [
     "/assets/custom_theme/css/navbar-header.css",
     "/assets/custom_theme/css/overwrite-style.css",
     "/assets/custom_theme/css/custom-main-menu.css",
+    "/assets/custom_theme/css/responsive.css",
 ]
 
 # include js, css files in header of desk.html

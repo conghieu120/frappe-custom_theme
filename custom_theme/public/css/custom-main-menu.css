@@ -54,6 +54,7 @@
     height: 100vh;
     margin-left: 80px;
     border-right: 1px solid var(--custom-theme-300);
+    background-color: rgba(var(--custom-theme-rgb-300), 0.1);
 }
 
 #custom-sidebar #workspaceTabContent {
