@@ -1,3 +1,11 @@
+/* Button */
+.btn {
+    --btn-primary: rgba(var(--custom-theme-rgb-600), 0.9);
+}
+.btn-primary:not(:disabled):not(.disabled):active {
+    background-color: rgba(var(--custom-theme-rgb-500), 0.8) !important;
+}
+
 /* Ẩn menu ở màn chính  */
 #page-Workspaces .layout-side-section {
     display: none !important;
@@ -60,5 +68,10 @@
 
 /* Tab của menu con */
 .nav-link.active {
-    background-color: rgba(var(--custom-theme-rgb-500), 0.8) !important;
+    background-color: unset !important;
+    border-color: rgba(var(--custom-theme-rgb-600), 0.4) !important;
+}
+
+.nav-link:hover {
+    border: 1px solid rgba(var(--custom-theme-rgb-500), 0.5) !important;
 }

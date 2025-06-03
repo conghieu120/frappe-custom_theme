@@ -54,7 +54,7 @@
     height: 100vh;
     margin-left: 80px;
     border-right: 1px solid var(--custom-theme-300);
-    background-color: rgba(var(--custom-theme-rgb-600), 0.3);
+    background-color: rgba(var(--custom-theme-rgb-500), 0.2);
 }
 
 #custom-sidebar #workspaceTabContent {
@@ -64,9 +64,9 @@
 .custom-btn.custom-btn-outline-primary {
     padding: 10px 16px;
     width: 100%;
-    background: none;
+    background: rgba(var(--custom-theme-rgb-100), 0.4);
     text-align: left;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(var(--custom-theme-rgb-500), 0.4);
     border-radius: 4px;
 }
 
@@ -82,4 +82,5 @@ h4#menu-title {
 
 #custom-sidebar #workspaceTab {
     padding: 0 12px;
+    border-bottom: 1px solid rgba(var(--custom-theme-rgb-600), 0.4);
 }

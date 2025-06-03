@@ -1,13 +1,28 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css");
 
 header.navbar.navbar-expand {
-    border-bottom: 1px solid var(--custom-theme-400);
+    width: 100vw;
+    position: fixed;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: rgba(var(--custom-theme-rgb-600), 0.3);
+    border-bottom: 1px solid rgba(var(--custom-theme-rgb-500), 0.5);
+    background-color: rgba(var(--custom-theme-rgb-500), 0.2);
 }
 
 .navbar {
     height: 60px;
+}
+
+/* Sửa lại page vì fixed header */
+.layout-main-section {
+    margin-top: 60px;
+}
+
+.page-head.flex {
+    top: 60px !important;
+}
+
+.col-lg-2.layout-side-section {
+    margin-top: 60px;
 }
 
 .custom-navbar {
