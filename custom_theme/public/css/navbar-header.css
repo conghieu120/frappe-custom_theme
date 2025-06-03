@@ -19,6 +19,7 @@ header.navbar.navbar-expand {
 
 .page-head.flex {
     top: 60px !important;
+    margin: auto 4px;
 }
 
 .col-lg-2.layout-side-section {
