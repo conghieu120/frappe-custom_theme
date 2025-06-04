@@ -216,11 +216,7 @@ async function initMenuItem() {
 }
 
 async function setupModuleMenu() {
-    let currentModule = await getFirstWorkspace();
-    if (!currentModule) {
-        const route = frappe.get_route();
-        currentModule = route?.[1];
-    }
+    const currentModule = await getFirstWorkspace();
     if (currentModule) {
         const moduleMenuData = await getModuleContent(currentModule);
         updateCustomMenu(currentModule, moduleMenuData);
@@ -290,15 +286,21 @@ function setupToggleSideBarFilter() {
 }
 
 async function getFirstWorkspace() {
+    let workspace = ''
     for (let i=0; i<3; i++) {
         if (frappe.breadcrumbs.all) {
-            const workspace = Object.entries(frappe.breadcrumbs.all)?.pop()?.pop()?.workspace;
+            workspace = Object.entries(frappe.breadcrumbs.all)?.pop()?.pop()?.workspace;
             if (workspace) {
-                return workspace;
-            } else {
-                console.log(frappe.breadcrumbs.all);
+                break;
             }
         }
         await new Promise(res => setTimeout(res, 50));
     }
+
+    if (!workspace) {
+        const route = frappe.get_route();
+        workspace = route?.[1];
+    }
+
+    return workspace;
 }
