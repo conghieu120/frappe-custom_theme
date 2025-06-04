@@ -216,8 +216,11 @@ async function initMenuItem() {
 }
 
 async function setupModuleMenu() {
-    const route = frappe.get_route();
-    let currentModule = route?.[1];
+    let currentModule = await getFirstWorkspace();
+    if (!currentModule) {
+        const route = frappe.get_route();
+        currentModule = route?.[1];
+    }
     if (currentModule) {
         const moduleMenuData = await getModuleContent(currentModule);
         updateCustomMenu(currentModule, moduleMenuData);
@@ -225,9 +228,11 @@ async function setupModuleMenu() {
     }
     frappe.router.on("change", async () => {
         const route = frappe.get_route();
-        currentModule = route[1];
-        const moduleMenuData = await getModuleContent(currentModule);
-        updateCustomMenu(currentModule, moduleMenuData);
+        if (route?.length === 2) {
+            currentModule = route[1];
+            const moduleMenuData = await getModuleContent(currentModule);
+            updateCustomMenu(currentModule, moduleMenuData);
+        };
         setupClickShowHideSubMenu();
         setupToggleSideBarFilter();
     });
@@ -281,5 +286,19 @@ function setupToggleSideBarFilter() {
         }
     } catch (error) {
         console.error(error)
+    }
+}
+
+async function getFirstWorkspace() {
+    for (let i=0; i<3; i++) {
+        if (frappe.breadcrumbs.all) {
+            const workspace = Object.entries(frappe.breadcrumbs.all)?.pop()?.pop()?.workspace;
+            if (workspace) {
+                return workspace;
+            } else {
+                console.log(frappe.breadcrumbs.all);
+            }
+        }
+        await new Promise(res => setTimeout(res, 50));
     }
 }
