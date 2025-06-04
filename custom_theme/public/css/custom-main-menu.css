@@ -84,3 +84,13 @@ h4#menu-title {
     padding: 0 12px;
     border-bottom: 1px solid rgba(var(--custom-theme-rgb-600), 0.4);
 }
+
+/* Toggle menu filter */
+.btn-toggle-sidebar {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    z-index: 4;
+    background-color: var(--bg-color);
+    border: 1px solid rgba(var(--custom-theme-rgb-300), 0.6);
+}

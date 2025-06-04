@@ -220,14 +220,16 @@ async function setupModuleMenu() {
     let currentModule = route?.[1];
     if (currentModule) {
         const moduleMenuData = await getModuleContent(currentModule);
-        updateCustomMenu(currentModule, moduleMenuData)
+        updateCustomMenu(currentModule, moduleMenuData);
+        setupToggleSideBarFilter();
     }
     frappe.router.on("change", async () => {
         const route = frappe.get_route();
         currentModule = route[1];
         const moduleMenuData = await getModuleContent(currentModule);
         updateCustomMenu(currentModule, moduleMenuData);
-        setupClickShowHideSubMenu()
+        setupClickShowHideSubMenu();
+        setupToggleSideBarFilter();
     });
 }
 
@@ -247,4 +249,37 @@ function setupClickShowHideSubMenu() {
             })
         }
     });
+}
+
+function setupToggleSideBarFilter() {
+    try {
+        const parentSelector = $('.content.page-container:not(#page-Workspaces) .col.layout-main-section-wrapper:visible');
+        const mainLayout = parentSelector.closest('.row.layout-main');
+        const sideSection = mainLayout.find(".col-lg-2.layout-side-section");
+
+        if (parentSelector && mainLayout && sideSection) {
+            const toggleBtn = parentSelector.find('.btn-toggle-sidebar');
+            if (toggleBtn.length === 0) {
+                const newToggleBtn = $(`
+                    <button class="btn btn-toggle-sidebar">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                `);
+                parentSelector.prepend(newToggleBtn);
+                if (mainLayout) {
+                    newToggleBtn.on('click', function() {
+                        if (sideSection.is(":visible")) {
+                            sideSection.hide();
+                            newToggleBtn.empty().append('<i class="fa-solid fa-chevron-right"></i>');
+                        } else {
+                            sideSection.show();
+                            newToggleBtn.empty().append('<i class="fa-solid fa-chevron-left"></i>');
+                        }
+                    })
+                }
+            }
+        }
+    } catch (error) {
+        console.error(error)
+    }
 }
