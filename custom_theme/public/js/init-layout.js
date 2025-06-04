@@ -1,8 +1,9 @@
 $(async function() {
     addMenuToLayout();
     addMenuToHeader();
-    await initMenuItem();
-    await setupModuleMenu();
+    const currentModule = await getFirstWorkspace();
+    await initMenuItem(currentModule);
+    await setupModuleMenu(currentModule);
     setupClickShowHideSubMenu();
 });
 
@@ -182,12 +183,13 @@ function addMenuToHeader() {
     `);
 }
 
-async function initMenuItem() {
+async function initMenuItem(currentModule) {
     const mainMenuData = await getMainMenuContent();
     for (const item of mainMenuData.pages) {
+        const isActive = item.module === currentModule;
         $("#custom-sidebar #main-menu").append(`
-            <div role="button" class="main-menu-item" data-link-to="${item.name.toLowerCase().replaceAll(' ', '-')}">
-                <svg class="icon  icon-md" aria-hidden="true">
+            <div role="button" class="${'main-menu-item ' + (isActive ? 'active' : '')}" data-link-to="${item.name.toLowerCase().replaceAll(' ', '-')}">
+                <svg class="icon icon-md" aria-hidden="true">
                     <use class="" href="#icon-${item.icon}"></use>
                 </svg>
                 <span>${item.label}</span>
@@ -202,6 +204,11 @@ async function initMenuItem() {
             </div>
         `)
     };
+    setTimeout(() => {
+        if ($("#main-menu .main-menu-item.active.active").get(0)) {
+            $("#main-menu .main-menu-item.active.active").get(0).scrollIntoView({ behavior: 'smooth' });
+        }
+    }, 750)
     $("#main-menu .main-menu-item").on('click', function() {
         $("#main-menu .main-menu-item.active").removeClass("active");
         $(this).addClass("active");
@@ -215,8 +222,7 @@ async function initMenuItem() {
     })
 }
 
-async function setupModuleMenu() {
-    const currentModule = await getFirstWorkspace();
+async function setupModuleMenu(currentModule) {
     if (currentModule) {
         const moduleMenuData = await getModuleContent(currentModule);
         updateCustomMenu(currentModule, moduleMenuData);
@@ -287,7 +293,7 @@ function setupToggleSideBarFilter() {
 
 async function getFirstWorkspace() {
     let workspace = ''
-    for (let i=0; i<3; i++) {
+    for (let i=0; i<10; i++) {
         if (frappe.breadcrumbs.all) {
             workspace = Object.entries(frappe.breadcrumbs.all)?.pop()?.pop()?.workspace;
             if (workspace) {
