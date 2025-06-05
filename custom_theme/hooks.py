@@ -39,6 +39,21 @@ app_include_js = [
     "/assets/custom_theme/js/custom_theme.js",
 ]
 
+fixtures = [
+    {
+        "doctype": "DocType",
+        "filters": {"name": "Theme Primary Color"}
+    },
+    {
+        "doctype": "Custom Field",
+        "filters": {"dt": "Theme Primary Color"}
+    },
+    {
+        "doctype": "Property Setter",
+        "filters": {"doc_type": "Theme Primary Color"}
+    }
+]
+
 # include js, css files in header of web template
 # web_include_css = "/assets/custom_theme/css/custom_theme.css"
 # web_include_js = "/assets/custom_theme/js/custom_theme.js"
