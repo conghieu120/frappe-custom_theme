@@ -1,4 +1,4 @@
-### Hieumc ERP
+### Hieumc/Custom theme
 
 ERP custom theme by hieumc
 
